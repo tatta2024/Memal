@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Marketplace | LinkMe</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="loadMarketplace()">
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<section>
+  <h2>🛒 Marketplace</h2>
+  <div id="marketItems" class="grid"></div>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+  function loadMarketplace() {
+    const items = JSON.parse(localStorage.getItem("linkmeItems")) || [];
+    const box = document.getElementById("marketItems");
+    box.innerHTML = "";
+
+    // Display only approved items
+    items.filter(i => i.approved).forEach(i => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <h3>${i.title}</h3>
+        <p><b>Type:</b> ${i.type} | <b>Price:</b> ${i.price} ETB</p>
+        <p><b>Seller:</b> ${i.seller}</p>
+        <a href="chat.html?seller=${encodeURIComponent(i.seller)}">Chat with Seller</a>
+      `;
+      box.appendChild(div);
+    });
+
+    if (box.innerHTML === "") {
+      box.innerHTML = "<p>No approved items available yet.</p>";
+    }
+  }
+</script>
+</body>
+</html>

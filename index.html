@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LinkMe | Workers • Marketplace • Services</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e60000">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="#workers">Workers</a>
+    <a href="#market">Marketplace</a>
+    <a href="upload.html">Post</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>Find Workers, Products & Services</h1>
+  <p>Sell • Rent • Exchange • Hire Professionals</p>
+
+  <input
+    type="text"
+    id="globalSearch"
+    placeholder="Search workers or items..."
+    onkeyup="globalSearch()"
+  >
+</section>
+
+<!-- ================= SEARCH RESULTS ================= -->
+<section id="searchResults" class="results"></section>
+
+<!-- ================= WORKERS ================= -->
+<section id="workers">
+  <h2 class="center">🧑‍🔧 Available Workers</h2>
+  <div id="workerList" class="grid"></div>
+</section>
+
+<!-- ================= MARKETPLACE ================= -->
+<section id="market">
+  <h2 class="center">🛒 Marketplace</h2>
+  <div id="marketItems" class="grid"></div>
+</section>
+
+<!-- ================= MODAL ================= -->
+<div id="previewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="center">
+  <p>© 2025 LinkMe | Ethiopia</p>
+  <p>
+    📞 +251 935859343 <br>
+    ✉ techietatta@gmail.com
+  </p>
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script src="js/script.js"></script>
+
+<script>
+/* ================= LOAD WORKERS ================= */
+function loadWorkers() {
+  const workers = JSON.parse(localStorage.getItem("linkmeWorkers")) || [];
+  const box = document.getElementById("workerList");
+  box.innerHTML = "";
+
+  if (workers.length === 0) {
+    box.innerHTML = "<p class='center'>No workers yet</p>";
+    return;
+  }
+
+  workers.forEach(w => {
+    box.innerHTML += `
+      <div class="card">
+        <h3>${w.profession}</h3>
+        <p>${w.name}</p>
+        <button onclick='showWorker(${JSON.stringify(w)})'>View</button>
+      </div>
+    `;
+  });
+}
+
+/* ================= LOAD MARKETPLACE ================= */
+function loadMarketplace() {
+  const items = JSON.parse(localStorage.getItem("linkmeItems")) || [];
+  const box = document.getElementById("marketItems");
+  box.innerHTML = "";
+
+  const approved = items.filter(i => i.approved);
+
+  if (approved.length === 0) {
+    box.innerHTML = "<p class='center'>No items yet</p>";
+    return;
+  }
+
+  approved.forEach(i => {
+    box.innerHTML += `
+      <div class="card">
+        <h3>${i.title}</h3>
+        <p>${i.type} | ${i.price} ETB</p>
+        <button onclick='showItem(${JSON.stringify(i)})'>View</button>
+      </div>
+    `;
+  });
+}
+
+/* ================= MODALS ================= */
+function showWorker(w) {
+  modalBody.innerHTML = `
+    <h3>${w.name}</h3>
+    <p><b>Profession:</b> ${w.profession}</p>
+    <p><b>Phone:</b> ${w.phone}</p>
+    <p><b>Area:</b> ${w.workArea}</p>
+  `;
+  openModal();
+}
+
+function showItem(i) {
+  modalBody.innerHTML = `
+    <h3>${i.title}</h3>
+    <p><b>Type:</b> ${i.type}</p>
+    <p><b>Price:</b> ${i.price} ETB</p>
+    <p><b>Seller:</b> ${i.seller}</p>
+    <a class="btn" href="chat.html?seller=${i.seller}">Chat Seller</a>
+  `;
+  openModal();
+}
+
+function openModal() {
+  document.getElementById("previewModal").style.display = "block";
+}
+function closeModal() {
+  document.getElementById("previewModal").style.display = "none";
+}
+
+/* ================= SEARCH ================= */
+function globalSearch() {
+  const q = globalSearch.value.toLowerCase();
+  const box = document.getElementById("searchResults");
+  box.innerHTML = "";
+
+  if (!q) return;
+
+  const workers = JSON.parse(localStorage.getItem("linkmeWorkers")) || [];
+  const items = JSON.parse(localStorage.getItem("linkmeItems")) || [];
+
+  workers.forEach(w => {
+    if (w.profession.toLowerCase().includes(q)) {
+      box.innerHTML += `
+        <div class="card">
+          <h3>${w.profession}</h3>
+          <p>${w.name}</p>
+        </div>
+      `;
+    }
+  });
+
+  items.filter(i => i.approved).forEach(i => {
+    if (i.title.toLowerCase().includes(q)) {
+      box.innerHTML += `
+        <div class="card">
+          <h3>${i.title}</h3>
+          <p>${i.price} ETB</p>
+        </div>
+      `;
+    }
+  });
+}
+
+/* ================= INIT ================= */
+loadWorkers();
+loadMarketplace();
+</script>
+
+</body>
+</html>

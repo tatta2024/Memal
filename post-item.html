@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Item | LinkMe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html">Home</a>
+  <a href="marketplace.html">Marketplace</a>
+  <a href="login.html" onclick="logout()">Logout</a>
+</nav>
+
+<section class="container">
+  <h2>📤 Share Item (Sell / Rent / Exchange)</h2>
+
+  <form id="postItemForm">
+    
+    <select id="itemCategory" required>
+      <option value="">Select Category</option>
+      <option>House</option>
+      <option>Car</option>
+      <option>Electronics</option>
+      <option>Furniture</option>
+      <option>Other</option>
+    </select>
+
+    <select id="itemPurpose" required>
+      <option value="">Purpose</option>
+      <option>Sell</option>
+      <option>Rent</option>
+      <option>Exchange</option>
+    </select>
+
+    <input type="text" id="itemTitle" placeholder="Item Title" required>
+    <input type="number" id="itemPrice" placeholder="Price (optional)">
+    <input type="text" id="itemLocation" placeholder="Location" required>
+
+    <textarea id="itemDescription" placeholder="Describe your item" required></textarea>
+
+    <label>Upload Photos (max 5)</label>
+    <input type="file" id="itemImages" accept="image/*" multiple required>
+
+    <button type="submit">Submit Item</button>
+  </form>
+</section>
+
+<script src="js/script.js"></script

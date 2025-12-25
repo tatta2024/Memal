@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Item | LinkMe</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo"><span>LinkMe</span></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="marketplace.html">Marketplace</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Logout</a>
+  </nav>
+</header>
+
+<section class="container">
+  <h2>📤 Submit Item for Sale / Rent / Exchange</h2>
+
+  <form id="submitItemForm" onsubmit="submitItem(event)">
+    
+    <input type="text" id="itemTitle" placeholder="Item Title" required>
+
+    <select id="itemType" required>
+      <option value="">Select Type</option>
+      <option>House</option>
+      <option>Product</option>
+      <option>Car</option>
+      <option>Exchange</option>
+    </select>
+
+    <textarea id="itemDesc" placeholder="Describe your item" required></textarea>
+
+    <input type="number" id="itemPrice" placeholder="Price (ETB)" required>
+
+    <input type="text" id="itemLocation" placeholder="Location" required>
+
+    <label>Upload Image (optional)</label>
+    <input type="file" id="itemImage" accept="image/*">
+
+    <button type="submit">Send for Approval</button>
+  </form>
+</section>
+
+<script src="js/script.js"></script>
+</body>
+</html>

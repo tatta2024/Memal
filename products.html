@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products | LinkMe</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="houses.html">Houses</a>
+    <a href="products.html">Products</a>
+    <a href="medicines.html">Medicines</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<section class="categories">
+  <h2>Products</h2>
+  <div class="category-grid">
+    <div class="card">
+      <h3>🖥 Laptop</h3>
+      <p>💰 15,000 ETB</p>
+      <button class="btn-primary" onclick="addToCart('Laptop', 15000)">Add to Cart</button>
+    </div>
+    <div class="card">
+      <h3>📱 Smartphone</h3>
+      <p>💰 8,000 ETB</p>
+      <button class="btn-primary" onclick="addToCart('Smartphone', 8000)">Add to Cart</button>
+    </div>
+    <div class="card">
+      <h3>🖨 Printer</h3>
+      <p>💰 5,500 ETB</p>
+      <button class="btn-primary" onclick="addToCart('Printer', 5500)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

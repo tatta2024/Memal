@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Houses & Rent | LinkMe</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="houses.html">Houses</a>
+    <a href="products.html">Products</a>
+    <a href="medicines.html">Medicines</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<section class="categories">
+  <h2>Houses & Rent</h2>
+
+  <input type="text" id="houseSearch" placeholder="Search houses..." onkeyup="filterHouses()">
+
+  <div id="houseList" class="category-grid"></div>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+  // Load houses dynamically from localStorage
+  function loadHouses() {
+    const allItems = JSON.parse(localStorage.getItem("linkmeItems")) || [];
+    const houses = allItems.filter(i => i.type.toLowerCase() === 'rent' || i.type.toLowerCase() === 'sell');
+    const container = document.getElementById("houseList");
+    container.innerHTML = "";
+
+    houses.forEach(h => {
+      container.innerHTML += `
+        <div class="card">
+          <h3>${h.title}</h3>
+          <p>💰 ${h.price} ETB</p>
+          <p><b>Seller:</b> ${h.seller}</p>
+          <button onclick="contactSeller('${h.seller}')">Contact Seller</button>
+        </div>
+      `;
+    });
+  }
+
+  // Search/filter houses
+  function filterHouses() {
+    const query = document.getElementById("houseSearch").value.toLowerCase();
+    const cards = document.querySelectorAll("#houseList .card");
+    cards.forEach(card => {
+      card.style.display = card.textContent.toLowerCase().includes(query) ? "" : "none";
+    });
+  }
+
+  // Contact seller via chat
+  function contactSeller(sellerEmail) {
+    const user = JSON.parse(localStorage.getItem("linkmeUser"));
+    if (!user) return alert("Please login to contact the seller");
+    window.location.href = `chat.html?seller=${sellerEmail}`;
+  }
+
+  loadHouses();
+</script>
+</body>
+</html>

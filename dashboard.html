@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - LinkMe</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+  loadDashboard();
+</script>
+
+</head>
+<body>
+
+<h2>👤 Customer Dashboard</h2>
+
+<h3>📦 Order History</h3>
+<div id="orderHistory"></div>
+
+<h3>🧾 Profile</h3>
+<div id="profileInfo"></div>
+<h2>👤 Customer Dashboard</h2>
+
+<h3>🧾 My Orders</h3>
+<div id="myOrders"></div>
+
+<script src="js/script.js"></script>
+<script>
+  const orders = JSON.parse(localStorage.getItem("linkmeOrders")) || [];
+  const orderDiv = document.getElementById("orderHistory");
+
+  orders.forEach(o => {
+    orderDiv.innerHTML += `<p>${o.name} - ${o.price} ETB (${o.date})</p>`;
+  });
+
+  const user = JSON.parse(localStorage.getItem("linkmeUser"));
+  if (user) {
+    document.getElementById("profileInfo").innerHTML =
+      `<p>Name: ${user.name}</p><p>Email: ${user.email}</p>`;
+  }
+</script>
+
+</body>
+</html>
+<h2>📊 Customer Dashboard</h2>
+
+<h3>Your Orders</h3>
+<div id="orderList"></div>
+
+<h3>Your Profile</h3>
+<div id="profileInfo"></div>

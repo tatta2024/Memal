@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medicines | LinkMe</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="houses.html">Houses</a>
+    <a href="products.html">Products</a>
+    <a href="medicines.html">Medicines</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<section class="categories">
+  <h2>Medicines & Pharmacy</h2>
+  <div class="category-grid">
+    <div class="card">
+      <h3>💊 Paracetamol</h3>
+      <p>💰 50 ETB</p>
+      <button class="btn-primary" onclick="addToCart('Paracetamol', 50)">Add to Cart</button>
+    </div>
+    <div class="card">
+      <h3>💊 Antibiotics</h3>
+      <p>💰 120 ETB</p>
+      <button class="btn-primary" onclick="addToCart('Antibiotics', 120)">Add to Cart</button>
+    </div>
+    <div class="card">
+      <h3>💊 Vitamin C</h3>
+      <p>💰 80 ETB</p>
+      <button class="btn-primary" onclick="addToCart('Vitamin C', 80)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+function addToCart(name, price) {
+  const user = JSON.parse(localStorage.getItem("linkmeUser"));
+  if (!user) return alert("Login required to add items to cart");
+
+  const orders = JSON.parse(localStorage.getItem("linkmeOrders")) || [];
+  orders.push({
+    id: Date.now(),
+    name: name,
+    price: price,
+    date: new Date().toLocaleString(),
+    user: user.email
+  });
+  localStorage.setItem("linkmeOrders", JSON.stringify(orders));
+  alert(name + " added to your cart");
+}
+</script>
+
+</body>
+</html>

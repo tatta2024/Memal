@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Share Item | LinkMe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo"><span>LinkMe</span></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="marketplace.html">Marketplace</a>
+    <a href="upload.html">Share Item</a>
+  </nav>
+</header>
+
+<section class="container">
+  <h2>📤 Share Item for Sale / Rent / Exchange</h2>
+
+  <form id="uploadForm" onsubmit="uploadItem(event)">
+    <input type="text" id="itemTitle" placeholder="Item Name" required>
+    
+    <select id="itemType" required>
+      <option value="">Select Purpose</option>
+      <option>Sell</option>
+      <option>Rent</option>
+      <option>Exchange</option>
+    </select>
+
+    <input type="number" id="itemPrice" placeholder="Price (ETB)">
+    <input type="text" id="itemLocation" placeholder="Location" required>
+
+    <textarea id="itemDescription" placeholder="Description" required></textarea>
+
+    <label>Upload Photo</label>
+    <input type="file" id="itemImage" accept="image/*" required>
+
+    <button type="submit">Submit for Approval</button>
+  </form>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

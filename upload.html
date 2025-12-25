@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Item | LinkMe</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="marketplace.html">Marketplace</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<section class="container">
+  <h2>📤 Submit Item for Sale / Rent / Exchange</h2>
+
+  <form id="uploadForm" onsubmit="uploadItem(event)">
+
+    <input type="text" id="itemTitle" placeholder="Item Title" required>
+
+    <input type="number" id="itemPrice" placeholder="Price (ETB)" required>
+
+    <select id="itemType" required>
+      <option value="">Select Purpose</option>
+      <option value="Sell">Sell</option>
+      <option value="Rent">Rent</option>
+      <option value="Exchange">Exchange</option>
+    </select>
+
+    <input type="text" id="itemLocation" placeholder="Location" required>
+
+    <textarea id="itemDescription" placeholder="Describe your item" required></textarea>
+
+    <label>Upload Image (optional)</label>
+    <input type="file" id="itemImage" accept="image/*">
+
+    <button type="submit">Submit for Approval</button>
+  </form>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+  // Check if user is logged in
+  const user = JSON.parse(localStorage.getItem("linkmeUser"));
+  if (!user) {
+    alert("You must be logged in to upload items.");
+    window.location.href = "login.html";
+  }
+</script>
+
+</body>
+</html>

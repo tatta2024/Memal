@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Orders | LinkMe</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="order.html">Place Order</a>
+    <a href="login.html" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<section class="orders-section">
+  <h2>📜 My Orders</h2>
+  <div id="ordersContainer"></div>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+  const user = JSON.parse(localStorage.getItem("linkmeUser"));
+  const orders = JSON.parse(localStorage.getItem("linkmeOrders")) || [];
+  const container = document.getElementById("ordersContainer");
+
+  if (!user) {
+    container.innerHTML = "<p>Please login to see your orders.</p>";
+  } else {
+    const userOrders = orders.filter(o => o.user === user.email);
+
+    if (userOrders.length === 0) {
+      container.innerHTML = "<p>No orders found.</p>";
+    } else {
+      userOrders.forEach(order => {
+        const div = document.createElement("div");
+        div.classList.add("order-card");
+        div.innerHTML = `
+          <p><b>Order Date:</b> ${order.date}</p>
+          <p><b>Name:</b> ${order.name}</p>
+          <p><b>Phone:</b> ${order.phone}</p>
+          <p><b>City:</b> ${order.city}</p>
+          <p><b>Address:</b> ${order.address}</p>
+          <p><b>Details:</b> ${order.details}</p>
+          <hr>
+        `;
+        container.appendChild(div);
+      });
+    }
+  }
+</script>
+
+</body>
+</html>

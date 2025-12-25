@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Services | LinkMe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+</header>
+
+<section>
+  <h2 class="center">Available Workers</h2>
+
+  <input
+    type="text"
+    id="workerSearch"
+    placeholder="Search profession..."
+    onkeyup="filterWorkers()"
+  >
+
+  <div id="workerList" class="grid"></div>
+</section>
+
+<!-- MODAL -->
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal()" class="close">&times;</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

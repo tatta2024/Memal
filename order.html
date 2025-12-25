@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Place Order | LinkMe</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="houses.html">Houses</a>
+    <a href="products.html">Products</a>
+    <a href="medicines.html">Medicines</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<section class="order-section">
+  <h2>📝 Place Your Order</h2>
+
+  <form id="orderForm" onsubmit="submitOrder(event)">
+    <input type="text" id="orderName" placeholder="Full Name" required>
+    <input type="tel" id="orderPhone" placeholder="Phone Number" required>
+    <input type="text" id="orderCity" placeholder="City / Location" required>
+    <textarea id="orderAddress" placeholder="Full Address" required></textarea>
+    <textarea id="orderDetails" placeholder="What do you want to order? (service, product, medicine, house, etc.)" required></textarea>
+    <button type="submit">Submit Order</button>
+  </form>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+function submitOrder(e) {
+  e.preventDefault();
+  const user = JSON.parse(localStorage.getItem("linkmeUser"));
+  if (!user) return alert("Please login to place an order");
+
+  const orders = JSON.parse(localStorage.getItem("linkmeOrders")) || [];
+
+  const newOrder = {
+    id: Date.now(),
+    user: user.email,
+    name: document.getElementById("orderName").value,
+    phone: document.getElementById("orderPhone").value,
+    city: document.getElementById("orderCity").value,
+    address: document.getElementById("orderAddress").value,
+    details: document.getElementById("orderDetails").value,
+    date: new Date().toLocaleString()
+  };
+
+  orders.push(newOrder);
+  localStorage.setItem("linkmeOrders", JSON.stringify(orders));
+
+  alert("Order submitted successfully!");
+  document.getElementById("orderForm").reset();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Worker Dashboard | LinkMe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<section class="container">
+  <h2>🧑‍🔧 Worker Dashboard</h2>
+
+  <h3>📋 Job Requests</h3>
+  <div id="jobRequests" class="grid"></div>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+  // Ensure user is logged in and is a worker
+  const user = JSON.parse(localStorage.getItem("linkmeUser"));
+  if (!user || user.role !== "worker") {
+    alert("Access restricted to workers only.");
+    window.location.href = "login.html";
+  }
+
+  // Load job requests dynamically
+  function loadJobRequests() {
+    const requests = JSON.parse(localStorage.getItem("linkmeJobRequests")) || [];
+    const container = document.getElementById("jobRequests");
+    container.innerHTML = "";
+
+    requests.forEach(req => {
+      container.innerHTML += `
+        <div class="card">
+          <h4>${req.jobTitle || "Job Request"}</h4>
+          <p><b>Customer:</b> ${req.customerName}</p>
+          <p><b>Phone:</b> ${req.customerPhone}</p>
+          <p><b>Location:</b> ${req.jobLocation}</p>
+          <p>${req.jobDetails}</p>
+          <button onclick="acceptJob(${req.id})">Accept Job</button>
+        </div>
+      `;
+    });
+  }
+
+  // Accept job request
+  function acceptJob(id) {
+    let requests = JSON.parse(localStorage.getItem("linkmeJobRequests")) || [];
+    const index = requests.findIndex(r => r.id === id);
+    if (index !== -1) {
+      alert("You accepted the job!");
+      requests.splice(index, 1); // remove accepted job
+      localStorage.setItem("linkmeJobRequests", JSON.stringify(requests));
+      loadJobRequests();
+    }
+  }
+
+  loadJobRequests();
+</script>
+
+</body>
+</html>

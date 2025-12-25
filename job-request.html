@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Request | LinkMe</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="houses.html">Houses</a>
+    <a href="products.html">Products</a>
+    <a href="medicines.html">Medicines</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<section>
+  <h2>📩 Send Job Request</h2>
+
+  <form onsubmit="sendJobRequest(event)">
+    <input type="text" id="customerName" placeholder="Your Name" required>
+    <input type="text" id="customerPhone" placeholder="Your Phone" required>
+    <input type="text" id="jobLocation" placeholder="Job Location" required>
+    <textarea id="jobDetails" placeholder="Describe the job you need" required></textarea>
+    <button type="submit">Send Request</button>
+  </form>
+</section>
+
+<script src="js/script.js"></script>
+<script>
+  function sendJobRequest(e) {
+    e.preventDefault();
+    const user = JSON.parse(localStorage.getItem("linkmeUser"));
+    if (!user) return alert("Please login to send a job request");
+
+    const requests = JSON.parse(localStorage.getItem("linkmeJobRequests")) || [];
+    requests.push({
+      id: Date.now(),
+      name: document.getElementById("customerName").value,
+      phone: document.getElementById("customerPhone").value,
+      location: document.getElementById("jobLocation").value,
+      details: document.getElementById("jobDetails").value,
+      sender: user.email
+    });
+
+    localStorage.setItem("linkmeJobRequests", JSON.stringify(requests));
+    alert("Job request sent successfully!");
+    e.target.reset();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Worker Registration | LinkMe</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="worker-register.html">Become a Worker</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+</nav>
+
+<!-- WORKER REGISTRATION -->
+<section class="container">
+  <h1>🧑‍🔧 Worker Registration</h1>
+  <p>Please fill all information carefully</p>
+
+  <form id="workerRegisterForm" onsubmit="submitWorkerRegistration(event)">
+    <!-- PHOTO -->
+    <h3>📸 Profile Photo</h3>
+    <input type="file" id="workerPhoto" accept="image/*" onchange="previewWorkerPhoto(event)" required>
+    <img id="workerPhotoPreview" src="" alt="Photo Preview" style="display:none; width:120px; height:160px; margin:5px 0;"><br>
+
+    <!-- PERSONAL INFO -->
+    <h3>👤 Personal Information</h3>
+    <input type="text" id="fullName" placeholder="Full Name" required>
+    <input type="date" id="dob" required>
+    <input type="text" id="birthPlace" placeholder="Birth Place" required>
+
+    <select id="gender" required>
+      <option value="">Gender</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+
+    <select id="marital" required>
+      <option value="">Marital Status</option>
+      <option>Single</option>
+      <option>Married</option>
+    </select>
+
+    <input type="number" id="age" placeholder="Age" required>
+
+    <!-- CONTACT INFO -->
+    <h3>📞 Contact Information</h3>
+    <input type="tel" id="phone" placeholder="Phone Number" required>
+    <input type="email" id="email" placeholder="Email (optional)">
+
+    <!-- WORK INFO -->
+    <h3>🛠 Work Information</h3>
+    <input type="text" id="profession" placeholder="Profession (Plumber, Electrician…)" required>
+    <input type="number" id="experience" placeholder="Years of Experience" required>
+
+    <select id="workArea" required>
+      <option value="">Available Working Area</option>
+      <option>Addis Ababa</option>
+      <option>Bole</option>
+      <option>Koye</option>
+      <option>Other</option>
+    </select>
+
+    <textarea id="skills" placeholder="Describe your skills & experience" required></textarea>
+
+    <!-- ADDRESS -->
+    <h3>📍 Address</h3>
+    <input type="text" id="city" placeholder="Current City" required>
+    <textarea id="fullAddress" placeholder="Full Address" required></textarea>
+
+    <!-- DOCUMENTS -->
+    <h3>📄 Documents (optional)</h3>
+    <input type="file" id="documents" accept=".pdf,.jpg,.png">
+
+    <button type="submit">Submit Registration</button>
+  </form>
+</section>
+
+<script src="script.js"></script>
+<script>
+  // Preview worker photo
+  function previewWorkerPhoto(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      const img = document.getElementById('workerPhotoPreview');
+      img.src = reader.result;
+      img.style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  // Submit worker registration
+  function submitWorkerRegistration(event) {
+    event.preventDefault();
+
+    const worker = {
+      photo: document.getElementById('workerPhotoPreview').src,
+      name: document.getElementById('fullName').value,
+      dob: document.getElementById('dob').value,
+      birthPlace: document.getElementById('birthPlace').value,
+      age: document.getElementById('age').value,
+      gender: document.getElementById('gender').value,
+      marital: document.getElementById('marital').value,
+      phone: document.getElementById('phone').value,
+      email: document.getElementById('email').value,
+      profession: document.getElementById('profession').value,
+      experience: document.getElementById('experience').value,
+      workArea: document.getElementById('workArea').value,
+      skills: document.getElementById('skills').value,
+      city: document.getElementById('city').value,
+      address: document.getElementById('fullAddress').value,
+      documents: document.getElementById('documents').value
+    };
+
+    // Save worker registration in localStorage (for demo)
+    let workers = JSON.parse(localStorage.getItem('linkmeWorkers')) || [];
+    workers.push(worker);
+    localStorage.setItem('linkmeWorkers', JSON.stringify(workers));
+
+    alert('Registration submitted successfully!');
+    document.getElementById('workerRegisterForm').reset();
+    document.getElementById('workerPhotoPreview').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

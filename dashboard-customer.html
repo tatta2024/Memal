@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Dashboard | LinkMe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadCustomerDashboard()">
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="LinkMe Logo">
+    <span>LinkMe</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="order.html">Place Order</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<!-- DASHBOARD CONTENT -->
+<section class="dashboard">
+  <h2>👤 Welcome, <span id="customerNameDisplay"></span></h2>
+
+  <!-- MY ORDERS -->
+  <h3>🧾 My Orders</h3>
+  <div id="orderHistory" class="grid"></div>
+
+  <!-- PROFILE INFO -->
+  <h3>🧾 My Profile</h3>
+  <div id="profileInfo" class="profile-info"></div>
+</section>
+
+<script src="script.js"></script>
+<script>
+  function loadCustomerDashboard() {
+    const user = JSON.parse(localStorage.getItem("linkmeUser"));
+    if (!user || user.role !== "customer") {
+      alert("Please login as customer to access the dashboard.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    // Display name
+    document.getElementById("customerNameDisplay").innerText = user.name;
+
+    // Load profile info
+    const profileContainer = document.getElementById("profileInfo");
+    profileContainer.innerHTML = `
+      <p><b>Name:</b> ${user.name}</p>
+      <p><b>Email:</b> ${user.email}</p>
+      <p><b>Role:</b> ${user.role}</p>
+    `;
+
+    // Load orders
+    const orders = JSON.parse(localStorage.getItem("linkmeOrders")) || [];
+    const userOrders = orders.filter(o => o.customerEmail === user.email);
+    const orderHistory = document.getElementById("orderHistory");
+    orderHistory.innerHTML = "";
+
+    if (userOrders.length === 0) {
+      orderHistory.innerHTML = "<p>No orders yet.</p>";
+    } else {
+      userOrders.forEach(order => {
+        const div = document.createElement("div");
+        div.classList.add("card");
+        div.innerHTML = `
+          <p><b>Date:</b> ${order.date}</p>
+          <p><b>Items:</b> ${order.items.map(i => i.name).join(", ")}</p>
+          <p><b>Location:</b> ${order.customerCity}</p>
+        `;
+        orderHistory.appendChild(div);
+      });
+    }
+  }
+</script>
+</body>
+</html>
